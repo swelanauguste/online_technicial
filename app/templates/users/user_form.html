@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+
+{% load crispy_forms_tags %}
+
+{% block head_title %}
+{{object}}
+{% endblock head_title %}
+
+
+
+{% block content %}
+<div class="pb-2 pt-5 mx-4">
+    <a class="text-decoration-none text-dark" href="{% url 'users:user-list' %}"><span
+            class="material-symbols-outlined fs-1">
+            arrow_back
+        </span></a>
+</div>
+<hr>
+<div class="container pb-3 pt-5">
+
+    <h1 class="">{{object}}</h1>
+    <div class="container py-5">
+        <div
+            class="col-4 bg-light py-4 px-5 border rounded-4 shadow py-3 border border-2 my-3">
+            <form action=""
+                method="post">
+                {% csrf_token %}
+                {{form|crispy}}
+                <hr>
+                <div class="my-3 text-end">
+                    <button class="btn btn-lg px-5 btn-outline-dark"
+                        type="submit">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

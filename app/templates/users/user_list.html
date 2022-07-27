@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+
+{% block head_title %}
+Users
+{% endblock head_title %}
+
+
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="border-bottom display-4">Users</h1>
+    {% for object in object_list %}
+    <ul>
+        <li>
+            <a class="text-dark" href="{{object.get_absolute_url}}">
+                {{object.profile.get_employee_full_name}}
+            </a>
+        </li>
+    </ul>
+
+    {% endfor %}
+
+</div>
+{% endblock content %}

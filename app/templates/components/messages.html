@@ -1,0 +1,13 @@
+{% if messages %}
+
+<div class="container mt-3">
+    {% for message in messages %}
+    {% if message.tags %}
+    <div id="alert-message"
+        class="alert alert-{{ message.tags }} show shadow-lg mb-5 rounded alert-message"
+        role="alert">
+        {% endif %}
+        <strong id="alert-message-1">{{ message }}</strong>
+        {% endfor %}
+    </div>
+{% endif %}

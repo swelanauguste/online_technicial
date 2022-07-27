@@ -1,18 +1,19 @@
 import uuid
-from enum import unique
 
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.urls import reverse
 from django.utils.text import slugify
-from pyexpat import model
 
 # from django.urls import reverse
 
 
 class User(AbstractUser):
-    is_viewer = models.BooleanField(default=True)
-    is_approver = models.BooleanField(default=False)
+    is_supervisor = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
+    
+    def get_absolute_url(self):
+        return reverse("users:user-update", kwargs={"pk": self.pk})
 
 
 class JobTitle(models.Model):
@@ -53,13 +54,17 @@ class UserProfile(models.Model):
         if not self.slug:
             self.slug = slugify(self.uid)
         super(UserProfile, self).save(*args, **kwargs)
-        
+
     @property
     def get_hourly_rate(self):
         return f"{(((self.salary * 12) / 52) / 5) / 8:.2f}"
 
+    @property
     def get_employee_full_name(self):
         return f"{self.first_name} {self.last_name}"
+
+    def get_absolute_url(self):
+        return reverse("users:user-profile-update", kwargs={"pk": self.pk, "slug": self.slug})
 
     def __str__(self) -> str:
         if self.first_name and self.last_name:

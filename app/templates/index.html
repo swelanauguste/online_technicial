@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+
+{% block head_title %}
+Home
+{% endblock head_title %}
+
+
+{% block content %}
+<div class="container py-5">
+    <div class="display-1">Home</div>
+    <hr>
+    <div class="container py-5">
+        <ul>
+
+            <li class="mb-2">
+                <a class="h2 text-dark"
+                    href="{% url 'overtime:time-sheet-list' %}">
+                    Overtime
+                </a>
+            </li>
+            <li class="mb-2">
+                <a class="h2 text-dark"
+                    href="{% url 'users:user-list' %}">
+                    Contacts
+                </a>
+            </li>
+            {% if request.user.is_admin %}
+            <li class="mb-2">
+                <a class="h2 text-dark"
+                    href="{% url 'users:user-list' %}">
+                    Users
+                </a>
+            </li>
+            <li class="mb-2">
+                <a class="h2 text-dark"
+                    href="{% url 'users:user-profile-list' %}">
+                    User Profiles
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+</div>
+{% endblock content %}

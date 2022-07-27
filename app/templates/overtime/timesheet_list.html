@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+
+{% load humanize %}
+
+{% block head_title %}
+Time sheets
+{% endblock head_title %}
+
+
+
+{% block content %}
+<div class="vh-100">
+
+    <div class="bg-warning px-5 pt-4 pb-3">
+        <a class="text-dark"
+            title="add time sheet"
+            href="{% url 'overtime:time-sheet-create' %}"><span
+                class="material-symbols-outlined fs-1">
+                add
+            </span></a>
+    </div>
+    <div class="container py-5">
+
+        <form class="border rounded-pill shadow p-4 mb-3 col-8 mx-auto"
+            action="{% url 'overtime:time-sheet-filter-list' %}"
+            method="get">
+            <div class="d-flex justify-content-between">
+                <div class="">
+                    <label for="">Employee</label>
+                    <select class="form-control-sm form-comtrol rounded-pill"
+                        name="employee"
+                        id="">
+                        {% for object in employee_list %}
+                        <option class="rounded-pill form-control"
+                            value="{{object.pk}}">
+                            {{object}}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="">
+                    <input class="form-control form-control-sm rounded-pill"
+                        type="date"
+                        name="start_date"
+                        placeholder="start date"
+                        id="">
+                </div>
+                <div class="">
+                    <input class="form-control form-control-sm rounded-pill"
+                        type="date"
+                        name="end_date"
+                        placeholder="end date"
+                        id="">
+                </div>
+                <div class="text-end">
+                    <button class="btn btn-sm btn-outline-dark"
+                        type="submit">Filter</button>
+                </div>
+            </div>
+
+
+        </form>
+
+        <h1 class="border-bottom display-4">Time sheets</h1>
+        <table class="table table-hover table-sm small">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Reason</th>
+                    <th scope="col">Start/End</th>
+                    <th scope="col">Multiplier</th>
+                    <th scope="col">Employee</th>
+                    <th scope="col">Created</th>
+                    <th scope="col">
+                        <span class="material-symbols-outlined">
+                            more_vert
+                        </span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for object in object_list %}
+
+                <tr>
+                    <th scope="row">{{forloop.counter}}</th>
+
+                    <td>{{object.date}}</td>
+                    <td>{{object.reason}}</td>
+                    <td>{{object.start_time}} - {{object.end_time}}</td>
+                    <td>{{object.multiplier}}</td>
+                    <td>{{object.created_by}}</td>
+                    <td>{{object.created_at|naturaltime}}</td>
+
+                    <td>
+                        <a class="text-primaryt"
+                            data-bs-toggle="modal"
+                            data-bs-target="#exampleModal{{object.pk}}">
+                            <span class="material-symbols-outlined">
+                                info
+                            </span>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% for object in object_list %}
+
+
+<!-- Modal -->
+<div class="modal fade"
+    id="exampleModal{{object.pk}}"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"
+                    id="exampleModalLabel">{{object.created_by}}</h5>
+                <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal">Close</button>
+                <button type="button"
+                    class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endfor %}
+
+{% endblock content %}

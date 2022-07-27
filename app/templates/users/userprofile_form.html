@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+
+{% load crispy_forms_tags %}
+
+{% block head_title %}
+{{object}}
+{% endblock head_title %}
+
+
+
+{% block content %}
+<div class="container mb-5 pt-5">
+
+    <h1 class="border-bottom border-dark">{{object}}</h1>
+    <div class="container py-3">
+        <div
+            class="col-lg-4 py-5 px-5 border rounded-4 shadow py-3 border border-2 my-3 bg-light">
+            <form action=""
+                method="post">
+                {% csrf_token %}
+                {{form|crispy}}
+
+                <div class="my-3">
+                    <button class="btn btn-lg px-5 btn-outline-dark"
+                        type="submit">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}
