@@ -22,7 +22,7 @@ Time sheets
     <div class="container py-5">
 
         <form class="border rounded-pill shadow p-4 mb-3 col-8 mx-auto"
-            action="{% url 'overtime:time-sheet-filter-list' %}"
+            action="{% url 'overtime:time-sheet-list' %}"
             method="get">
             <div class="d-flex justify-content-between">
                 <div class="">
@@ -72,6 +72,7 @@ Time sheets
                     <th scope="col">Multiplier</th>
                     <th scope="col">Employee</th>
                     <th scope="col">Created</th>
+                    <th scope="col">Overtime</th>
                     <th scope="col">
                         <span class="material-symbols-outlined">
                             more_vert
@@ -91,7 +92,7 @@ Time sheets
                     <td>{{object.multiplier}}</td>
                     <td>{{object.created_by}}</td>
                     <td>{{object.created_at|naturaltime}}</td>
-
+                    <td>${{object.get_overtime|default:"$0.0"}}</td>
                     <td>
                         <a class="text-primaryt"
                             data-bs-toggle="modal"
@@ -142,5 +143,9 @@ Time sheets
 </div>
 
 {% endfor %}
+
+<script>
+    document.querySelectorAll('#');
+</script>
 
 {% endblock content %}

@@ -56,6 +56,8 @@ class TimeSheet(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    
+    
 
     class Meta:
         ordering = ("-created_at",)
@@ -70,12 +72,12 @@ class TimeSheet(models.Model):
             - datetime.strptime(str(self.start_time), "%H:%M:%S")
         ).seconds / 3600
 
-    # @property
-    # def get_overtime(self):
-    #     overtime = (float(self.multiplier.multiplier) * float(self.time_diff)) * float(
-    #         self.employee.get_hourly_rate
-    #     )
-    #     return f"{overtime:.2f}"
+    @property
+    def get_overtime(self):
+        overtime = (float(self.multiplier.multiplier) * float(self.time_diff)) * float(
+            self.employee.hourly_rate
+        )
+        return f"{overtime:.2f}"
 
-    # def __str__(self):
-    #     return f"${self.get_overtime} ({self.time_diff} hours)"
+    def __str__(self):
+        return f"${self.get_overtime} ({self.time_diff} hours)"

@@ -2,22 +2,36 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Q
 from django.views.generic import CreateView, ListView, UpdateView
 from users.models import UserProfile
-
+from django.urls import reverse_lazy
 from .forms import TimeSheetCreateForm
 from .models import TimeSheet
 
 
 class TimeSheetListView(ListView):
     model = TimeSheet
-    # template_name = "overtime/timesheet_list.html"
+    template_name = "overtime/timesheet_list.html"
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["object_list"] = TimeSheet.objects.filter(
-            created_by=self.request.user.profile
-        )
+    def get_context_data(self, *args, **kwargs):
+        context = super(TimeSheetListView, self).get_context_data(*args, **kwargs)
         context["employee_list"] = UserProfile.objects.all()
         return context
+
+    def get_queryset(self):
+        queryset = TimeSheet.objects.filter(
+            created_by=self.request.user.profile
+        )
+        employee = self.request.GET.get("employee")
+        start_date = self.request.GET.get("start_date")
+        end_date = self.request.GET.get("end_date")
+        print(start_date, "start_date", end_date, "end_date")
+        if start_date != "" and start_date is not None:
+            if end_date != "" and end_date is not None:
+                if employee != "" and employee is not None:
+                    queryset = queryset.filter(
+                Q(id=employee) | Q(date__range=[start_date, end_date])
+            ).distinct()
+            print(queryset, "queryset")
+        return queryset
 
 
 class TimeSheetFilterListView(ListView):
@@ -30,9 +44,9 @@ class TimeSheetFilterListView(ListView):
         start_date = self.request.GET.get("start_date")
         end_date = self.request.GET.get("end_date")
         print(start_date, "start_date", end_date, "end_date")
-        if start_date:
+        if start_date or end_date or employee:
             queryset = queryset.filter(
-                Q(id=employee) | Q(date__gte=start_date) | Q(date__lte=end_date)
+                Q(id=employee) | Q(date__range=[start_date, end_date])
             ).distinct()
             print(queryset, "queryset")
         return queryset
@@ -53,6 +67,7 @@ class TimeSheetCreateView(SuccessMessageMixin, CreateView):
     model = TimeSheet
     form_class = TimeSheetCreateForm
     success_message = "Your time sheet was added successfully"
+    success_url = reverse_lazy('overtime:time-sheet-list')
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user.profile
