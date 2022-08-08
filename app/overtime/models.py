@@ -71,8 +71,7 @@ class TimeSheet(models.Model):
     @property
     def get_overtime(self):
         ot = Decimal(self.employee.profile.hourly_rate) * Decimal(self.multiplier.multiplier) * Decimal(self.time_diff)
-        return ot
-        # return str(round(ot, 2))
+        return "%.2f" % round(ot, 3)
 
     def __str__(self):
         return f"${self.get_overtime} ({self.time_diff} hours) ({self.date}) {self.multiplier.multiplier}"

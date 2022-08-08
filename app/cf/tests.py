@@ -3,7 +3,7 @@
 # # Create your tests here.
 
 import datetime
-
+import math
 import pytz
 from dateutil import parser
 
@@ -17,11 +17,13 @@ current_day = datetime.datetime.today().weekday()
 slu_tz = pytz.timezone("America/St_Lucia")
 time_in_st_lucia = datetime.datetime.now(slu_tz).strftime("%H:%M")
 midnight = datetime.datetime.strptime("0:00", "%H:%M").time().strftime("%H:%M")
-print(type(time_in_st_lucia))
-print(type(midnight))
-print(time_in_st_lucia)
-print(midnight)
+# print(type(time_in_st_lucia))
+# print(type(midnight))
+# print(time_in_st_lucia)
+# print(midnight)
 
+x1 = 24.225
+print(float('%.2f' % round(x1,2)))
 
 def is_before_mid_night():
     if midnight < time_in_st_lucia:
