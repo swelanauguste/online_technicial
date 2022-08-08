@@ -43,7 +43,7 @@ class UserProfile(models.Model):
     last_name = models.CharField(max_length=65, blank=True)
     job_title = models.ForeignKey(JobTitle, on_delete=models.SET_NULL, null=True)
     department = models.ForeignKey(Department, on_delete=models.SET_NULL, null=True)
-    salary = models.PositiveSmallIntegerField(default=0)
+    salary = models.DecimalField(default=0, max_digits=9, decimal_places=2)
     supervisor = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     gender = models.CharField(max_length=1, choices=GENDER_LIST)
     dob = models.DateField("DOB", blank=True, null=True)

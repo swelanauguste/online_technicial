@@ -12,9 +12,19 @@ urlpatterns = [
         views.TimeSheetPendingApprovalListView.as_view(),
         name="time-sheet-pending-approval",
     ),
+    # path(
+    #     "filter-list/",
+    #     views.TimeSheetFilterListView.as_view(),
+    #     name="time-sheet-filter-list",
+    # ),
     path(
-        "filter-list/",
-        views.TimeSheetFilterListView.as_view(),
-        name="time-sheet-filter-list",
+        "update/<int:pk>/",
+        views.TimeSheetUpdateView.as_view(),
+        name="time-sheet-update",
+    ),
+    path(
+        "delete/<int:pk>/",
+        views.TimeSheetDeleteView.as_view(),
+        name="time-sheet-delete",
     ),
 ]

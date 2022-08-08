@@ -7,39 +7,44 @@ Home
 
 
 {% block content %}
-<div class="container py-5">
-    <div class="display-1">Home</div>
-    <hr>
-    <div class="container py-5">
-        <ul>
+<div class="display-3 bg-warning p-3">Home</div>
 
+<div class="container py-5 vh-100">
+    <div class="container py-5">
+        <ol>
             <li class="mb-2">
-                <a class="h2 text-dark"
+                <a class="fs-5 text-dark"
                     href="{% url 'overtime:time-sheet-list' %}">
                     Overtime
                 </a>
             </li>
             <li class="mb-2">
-                <a class="h2 text-dark"
+                <a class="fs-5 text-dark"
+                    href="{% url 'meals:meal-list' %}">
+                    Meals
+                </a>
+            </li>
+            <li class="mb-2">
+                <a class="fs-5 text-dark"
                     href="{% url 'users:user-list' %}">
                     Contacts
                 </a>
             </li>
             {% if request.user.is_admin %}
             <li class="mb-2">
-                <a class="h2 text-dark"
+                <a class="fs-5 text-dark"
                     href="{% url 'users:user-list' %}">
                     Users
                 </a>
             </li>
             <li class="mb-2">
-                <a class="h2 text-dark"
+                <a class="fs-5 text-dark"
                     href="{% url 'users:user-profile-list' %}">
                     User Profiles
                 </a>
             </li>
             {% endif %}
-        </ul>
+        </ol>
     </div>
 </div>
 {% endblock content %}

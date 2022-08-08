@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+
+{% load crispy_forms_tags %}
+
+{% block head_title %}
+Add Meal
+{% endblock head_title %}
+
+
+{% block content %}
+<div class="pt-4 pb-2 px-5 bg-info">
+    <a title="back" class="text-decoration-none text-dark" href="{% url 'overtime:time-sheet-list' %}"><span
+            class="material-symbols-outlined fs-1">
+            arrow_back
+        </span></a>
+</div>
+<h1 class="bg-warning text-bg-warning p-3 text-center">Add Meal</h1>
+<div class="container">
+    <div class="container pb-5">
+        <div
+            class="col-4 bg-light py-4 px-5 border rounded-4 shadow py-3 mx-auto border border-2 my-3">
+            <form action=""
+                method="post">
+                {% csrf_token %}
+                {{form|crispy}}
+                <div class="my-3 text-end">
+                    <button class="btn btn-sm px-5 btn-outline-dark"
+                        type="submit">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}
