@@ -7,7 +7,7 @@ Time sheets
 {% endblock head_title %}
 
 {% block content %}
-<div class="vh-100">
+<div class="min-vh-100">
     <div class="bg-warning px-5 pt-4 pb-3">
         <a class="text-dark"
             title="add time sheet"
@@ -16,9 +16,9 @@ Time sheets
                 add
             </span></a>
     </div>
-    
-    <div class="container py-5">
-        <form class="border rounded-pill shadow p-4 mb-3 col-8 mx-auto"
+
+    <div class="px-3 py-5">
+        <form class="border rounded-pill shadow p-4 mb-3 col-lg-8 mx-auto"
             action="{% url 'overtime:time-sheet-list' %}"
             method="get">
             <div class="d-flex justify-content-between">
@@ -66,21 +66,24 @@ Time sheets
                     class="display-4"></span>
             </div>
         </div>
+        <div class="my-2">
+            {% include 'components/pagination.html' %}
+        </div>
         <table class="table table-hover table-sm small">
             <thead>
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Date</th>
-                    <th scope="col">Reason</th>
-                    <th scope="col">Start/End</th>
-                    <th scope="col">Multiplier</th>
-                    <th scope="col">Employee</th>
+                    <th class="col-3" scope="col">Reason</th>
+                    <th class="col-1" scope="col">Start/End</th>
+                    <th class="col-1" scope="col">Multiplier</th>
+                    <th class="col-1" class="col-1"scope="col">Employee</th>
                     <th scope="col">Created</th>
                     <th scope="col">Hours</th>
                     <th scope="col">Overtime</th>
                     <th scope="col">
                         <div class="text-center">
-                            <span class="material-symbols-outlined">
+                            <span title="details"class="material-symbols-outlined">
                                 more_vert
                             </span>
                         </div>
@@ -94,10 +97,11 @@ Time sheets
                     <th scope="row">{{forloop.counter}}</th>
 
                     <td>{{object.date}}</td>
-                    <td>{{object.reason}}</td>
+                    <td title="{{object.reason}}">
+                        {{object.reason|truncatechars:60}}</td>
                     <td>{{object.start_time}} - {{object.end_time}}</td>
                     <td>{{object.multiplier}}</td>
-                    <td>{{object.created_by}}</td>
+                    <td>{{object.created_by.profile}}</td>
                     <td>{{object.created_at|naturaltime}}</td>
                     <td>{{object.time_diff}} hrs</td>
                     <td id="get_overtime">XCD${{object.get_overtime}}</td>
@@ -105,7 +109,7 @@ Time sheets
                         <a class="text-primary"
                             data-bs-toggle="modal"
                             data-bs-target="#exampleModal{{object.pk}}">
-                            <span class="material-symbols-outlined">
+                            <span title="details" class="material-symbols-outlined">
                                 info
                             </span>
                         </a>
@@ -114,6 +118,9 @@ Time sheets
                 {% endfor %}
             </tbody>
         </table>
+        <div class="my-2">
+            {% include 'components/pagination.html' %}
+        </div>
     </div>
 </div>
 
