@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% load humanize %}
+
+{% block head_title %}
+Form List
+{% endblock head_title %}
+
+{% block content %}
+<div class="min-vh-100">
+
+    <div class="px-5 py-5">
+        <form class=" col-lg-4 mx-auto"
+            action=""
+            method="get">
+            <div class="col">
+                <input class="form-control form-control-sm rounded-pill"
+                    type="text"
+                    name="q">
+            </div>
+        </form>
+        <div class="row border-bottom border-top mt-5 mb-3">
+            <div class="col">
+                <h1 class="display-4">Forms List</h1>
+            </div>
+            <div class="col text-end">
+                <span id="mySpan"
+                    class="display-4"></span>
+            </div>
+        </div>
+        <div class="container">
+            <div class="my-2">
+                {% include 'components/pagination.html' %}
+            </div>
+            <hr>
+            <ul class="list-unstyled">
+                <li>
+                    <a target="_blank"
+                        href="{{object.doc.url}}">{{object}}</a>
+                </li>
+            </ul>
+            <table class="table table-hover">
+                <!-- <tbody> -->
+                {% for object in object_list %}
+                  <tr>
+                    <th scope="row">1</th>
+                    <td><a target="_blank"
+                        href="{{object.doc.url}}">{{object}}</a></td>
+                  </tr>
+                {% endfor %}
+                <!-- </tbody> -->
+              </table>
+            <hr>
+            <div class="my-2">
+                {% include 'components/pagination.html' %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% for object in object_list %}
+
+
+<!-- Modal -->
+<div class="modal fade"
+    id="exampleModal{{object.pk}}"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"
+                    id="exampleModalLabel">{{object.created_by}}</h5>
+                <button type="button"
+                    title="close"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                XCD${{object.get_overtime}}
+            </div>
+            <div class="modal-footer">
+                <a title="edit"
+                    class="fs-3 text-warning"
+                    href="{% url 'overtime:time-sheet-update' object.pk %}">
+                    <span class="material-symbols-outlined">
+                        edit
+                    </span>
+                </a>
+                <a title="edit"
+                    class="fs-3 text-danger"
+                    href="{% url 'overtime:time-sheet-delete' object.pk %}">
+                    <span class="material-symbols-outlined">
+                        delete
+                    </span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+{% endblock content %}

@@ -14,7 +14,7 @@ from .models import TimeSheet
 class TimeSheetListView(ListView):
     model = TimeSheet
     template_name = "overtime/timesheet_list.html"
-    paginate_by = 10
+    paginate_by = 30
 
     def get_context_data(self, *args, **kwargs):
         context = super(TimeSheetListView, self).get_context_data(*args, **kwargs)

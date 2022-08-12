@@ -30,6 +30,12 @@ Home
                     Contacts
                 </a>
             </li>
+            <li class="mb-2">
+                <a class="fs-5 text-dark"
+                    href="{% url 'forms:form-list' %}">
+                    Forms
+                </a>
+            </li>
             {% if request.user.is_admin %}
             <li class="mb-2">
                 <a class="fs-5 text-dark"

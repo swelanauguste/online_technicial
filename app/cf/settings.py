@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     "users",
     "overtime",
     "meals",
+    "forms",
     # 3rd party
     "crispy_forms",
     "allauth",
