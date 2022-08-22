@@ -4,7 +4,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
-
+import decimal
 # from django.urls import reverse
 
 
@@ -49,13 +49,13 @@ class UserProfile(models.Model):
     dob = models.DateField("DOB", blank=True, null=True)
     bio = models.TextField(blank=True)
     phone = models.CharField(max_length=25, blank=True, default="50")
-    hourly_rate = models.DecimalField(decimal_places=2, max_digits=9, default=0)
+    hourly_rate = models.DecimalField(decimal_places=2, max_digits=9, default=0, blank=True, null=True)
 
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.uid)
         if not self.hourly_rate:
-            self.hourly_rate = (((self.salary * 12) / 52) / 5) / 8
+            self.hourly_rate = (((self.salary * 12) / 52) / 5) / decimal.Decimal(7.5)
         super(UserProfile, self).save(*args, **kwargs)
 
     @property
